@@ -19,6 +19,7 @@
         <module>user-api</module>
         <module>user-service</module>
         <module>mongodb-demo</module>
+        <module>sharding-demo</module>
 
     </modules>
 

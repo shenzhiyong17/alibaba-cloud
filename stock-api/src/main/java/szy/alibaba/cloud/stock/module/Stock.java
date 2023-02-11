@@ -13,5 +13,6 @@ public class Stock {
     int productId;
     String productName;
     int stockCount;
+    long updateTime = System.currentTimeMillis();
 
 }
