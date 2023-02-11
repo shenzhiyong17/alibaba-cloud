@@ -1,0 +1,25 @@
+spring:
+  cloud:
+    nacos:  # nacos 配置中心的配置必须写在bootstrap文件里
+      server-addr: localhost:8848
+      discovery:
+        username: nacos
+        password: nacos
+        namespace:  staging
+      config:
+        # group和file-extension 只针对默认的服务配置文件，扩展配置需要指定文件指定dataId
+        file-extension: properties # 默认properties格式，如果配置中心改为其他格式，此处需同步
+        namespace: staging  # namespace 对应 profile环境（dev、pro、staging）
+        group: ali-cloud # group 对应项目（neo）， applocation.name对应 dataId（order-service）
+        shared-configs:
+          # 优先级小于默认配置，这里只配置默认文件里没有的属性
+          # shared-configs下相同属性，后读覆盖先读，下标越大优先级越高
+          - dataId: ali-cloud.common.yaml
+#            group: DEFAULT_GROUP
+            refresh: true
+        extension-configs:
+          # extension-configs 与shared-configs 配置一样，优先级 > shared-configs
+          - dataId: ali-cloud.common.extension.yaml
+            # group: DEFAULT_GROUP
+            refresh: true
+

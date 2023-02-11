@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: stock-service
+  cloud:
+    nacos:
+      discovery:
+        username: nacos
+        password: nacos
+        namespace: staging
+      server-addr: localhost:8848
+
+  datasource:
+    username: root
+    password: root
+    url: jdbc:mysql://127.0.0.1:3306/homework?serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+server:
+  port: 9600
+
+feign:
+  client:
+    config:
+      order-service:
+        loggerLevel: BASIC
+        requestInterceptors:
+          - szy.cloud.stock.config.FeignAuthConfig
+  hystrix:
+    enabled: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - hystrix.stream

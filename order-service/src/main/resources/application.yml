@@ -1,0 +1,11 @@
+server:
+  port: 9500
+spring:
+  application:
+    name: order-service  # 对应 nacos config 的 dataId
+  profiles:
+    # 默认的nacos配置文件结合profile：
+    # 对应nacos config的dataId为 ${spring.appliaction.name}-${spring.profiles.active}.${nacos.config.extension}
+    # active配置覆盖默认文件配置，如果没有active就用默认
+    # 因为namespace对应环境，所以此种设置一般不用
+    active: dev

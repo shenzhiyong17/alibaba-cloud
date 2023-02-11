@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTO Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+<!--    &lt;!&ndash;配置连接数据库的环境 &ndash;&gt;-->
+<!--    <environments default="dev">-->
+<!--        <environment id="dev">-->
+<!--            <transactionManager type="JDBC"/>-->
+<!--            <dataSource type="POOLED">-->
+<!--                <property name="driver" value="com.mysql.jdbc.Driver"/>-->
+<!--                <property name="url" value="jdbc:mysql://127.0.0.1:3306/homework?serverTimezone=UTC"/>-->
+<!--                <property name="username" value="root"/>-->
+<!--                <property name="password" value="root"/>-->
+<!--            </dataSource>-->
+<!--        </environment>-->
+<!--    </environments>-->
+<!--    &lt;!&ndash;映射文件 &ndash;&gt;-->
+<!--    <mappers>-->
+<!--        <mapper resource="mappers/OrderMapper.xml" />-->
+<!--    </mappers>-->
+</configuration>

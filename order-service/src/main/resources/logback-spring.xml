@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration debug="true" scan="true" scanPeriod="120seconds">
+    <!--参考https://blog.csdn.net/maguanghui_2012/article/details/80727770 -->
+
+    <!--自定义变量-->
+    <property name="CONSOL_LOG_PATTERN"
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS} - [Thread:%thread] - [%-5level] - [%logger{200}:%line] - %msg [TraceInfo:%X{X-B3-TraceId:-}-%X{X-B3-SpanId:-}] %n"/>
+    <property name="FILE_LOG_PATTERN"
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS} - [Thread:%thread] - [%-5level] - [%logger{200}:%line] - %msg [TraceInfo:%X{X-B3-TraceId:-}-%X{X-B3-SpanId:-}] %n"/>
+    <property name="CONSOLE_APPENDER_NAME" value="CONSOLE"/>
+<!--    <property name="FILE_APPENDER_NAME" value="FILE"/>-->
+<!--    <property name="WARN_FILE_APPENDER_NAME" value="WARN-LOG-FILE"/>-->
+
+    <property name="ROOT_LEVEL" value="INFO"/>
+
+    <property name="LOG_FILE" value="log/${project.artifactId}/${project.artifactId}.log"/>
+
+    <property name="WARN_LOG_FILE"
+              value="log/${project.artifactId}/${project.artifactId}-warn.log"/>
+
+
+    <!--控制台日志输出配置-->
+    <appender name="${CONSOLE_APPENDER_NAME}" class="ch.qos.logback.core.ConsoleAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <!-- Minimum logging level to be presented in the console logs-->
+            <level>DEBUG</level>
+        </filter>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${CONSOL_LOG_PATTERN}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!--日志文件输出日志配置-->
+<!--    <appender name="${FILE_APPENDER_NAME}" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+<!--        &lt;!&ndash;Window上 不能使用该标签&ndash;&gt;-->
+<!--        &lt;!&ndash;<File>${LOG_FILE_PATH}</File>&ndash;&gt;-->
+<!--        <file>${LOG_FILE}</file>-->
+<!--        &lt;!&ndash;按照大小以及日期的形式分隔日志文件&ndash;&gt;-->
+<!--        &lt;!&ndash;-->
+<!--        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">-->
+<!--             <FileNamePattern>${LOG_FILE_PATH}.%d{yyyy-MM-dd HH:mm:ss}.%i.log</FileNamePattern>-->
+<!--          <FileNamePattern>${LOG_FILE}-%d{yyyy-MM-dd}-%i</FileNamePattern>-->
+<!--            <MaxHistory>360000</MaxHistory>-->
+<!--            <maxFileSize>10MB</maxFileSize>-->
+<!--            <totalSizeCap>20MB</totalSizeCap>-->
+<!--        </rollingPolicy>-->
+<!--        &ndash;&gt;-->
+
+<!--        &lt;!&ndash;以日期为基础 分隔日志文件 &ndash;&gt;-->
+<!--        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">-->
+<!--            <FileNamePattern>${LOG_FILE}.%d{yyyy-MM-dd}</FileNamePattern>-->
+<!--            <MaxHistory>360000</MaxHistory>-->
+<!--        </rollingPolicy>-->
+
+<!--        &lt;!&ndash;按照大小的方式 分隔日志文件&ndash;&gt;-->
+<!--        &lt;!&ndash; <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">-->
+<!--             <maxFileSize>1MB</maxFileSize>-->
+<!--         </triggeringPolicy>&ndash;&gt;-->
+
+<!--        <filter class="ch.qos.logback.classic.filter.LevelFilter">-->
+
+<!--            <level>DEBUG</level>-->
+<!--            &lt;!&ndash;-->
+<!--            只收集WARN级别的日志，其他高级别和低级别的日志都放弃-->
+<!--            <level>WARN</level>-->
+<!--            <onMatch>ACCEPT</onMatch>-->
+<!--            <onMismatch>DENY</onMismatch>-->
+
+<!--            收集ERROR及ERROR以上级别的日志-->
+<!--            <level>ERROR</level>-->
+<!--            &ndash;&gt;-->
+<!--        </filter>-->
+
+<!--        <encoder>-->
+<!--            <pattern>${FILE_LOG_PATTERN}</pattern>-->
+<!--            <charset>UTF-8</charset>-->
+<!--        </encoder>-->
+<!--    </appender>-->
+
+
+    <!--日志文件输出日志配置-->
+<!--    <appender name="${WARN_FILE_APPENDER_NAME}" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+<!--        &lt;!&ndash;Window上 不能使用该标签&ndash;&gt;-->
+<!--        &lt;!&ndash;<File>${LOG_FILE_PATH}</File>&ndash;&gt;-->
+<!--        <file>${WARN_LOG_FILE}</file>-->
+<!--        &lt;!&ndash;按照大小以及日期的形式分隔日志文件&ndash;&gt;-->
+<!--        &lt;!&ndash;-->
+<!--        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">-->
+<!--             <FileNamePattern>${LOG_FILE_PATH}.%d{yyyy-MM-dd HH:mm:ss}.%i.log</FileNamePattern>-->
+<!--          <FileNamePattern>${LOG_FILE}-%d{yyyy-MM-dd}-%i</FileNamePattern>-->
+<!--            <MaxHistory>360000</MaxHistory>-->
+<!--            <maxFileSize>10MB</maxFileSize>-->
+<!--            <totalSizeCap>20MB</totalSizeCap>-->
+<!--        </rollingPolicy>-->
+<!--        &ndash;&gt;-->
+
+<!--        &lt;!&ndash;以日期为基础 分隔日志文件 &ndash;&gt;-->
+<!--        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">-->
+<!--            <FileNamePattern>${WARN_LOG_FILE}.%d{yyyy-MM-dd}</FileNamePattern>-->
+<!--            <MaxHistory>360000</MaxHistory>-->
+<!--        </rollingPolicy>-->
+
+
+<!--        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">-->
+
+<!--            <level>WARN</level>-->
+<!--            &lt;!&ndash;-->
+<!--            只收集WARN级别的日志，其他高级别和低级别的日志都放弃-->
+<!--            <level>WARN</level>-->
+<!--            <onMatch>ACCEPT</onMatch>-->
+<!--            <onMismatch>DENY</onMismatch>-->
+<!--            收集ERROR及ERROR以上级别的日志-->
+<!--            <level>ERROR</level>-->
+<!--            &ndash;&gt;-->
+<!--        </filter>-->
+
+<!--        <encoder>-->
+<!--            <pattern>${FILE_LOG_PATTERN}</pattern>-->
+<!--            <charset>UTF-8</charset>-->
+<!--        </encoder>-->
+<!--    </appender>-->
+
+<!--    <appender name="${service_name}-localLogScribe"-->
+<!--              class="com.xiaomi.mifi.ins.log.appender.ScribeAppender">-->
+<!--        <scribeConfig class="com.xiaomi.mifi.ins.log.appender.ScribeConfig">-->
+<!--            <param name="encoding" value="utf-8"/>-->
+<!--            <param name="scribeHost" value="127.0.0.1"/>-->
+<!--            <param name="scribePort" value="7990"/>-->
+<!--            <param name="scribeCategory" value="${service_name}"/>-->
+<!--            <param name="showIp" value="true"></param>-->
+<!--        </scribeConfig>-->
+<!--        <encoder>-->
+<!--            <pattern>${FILE_LOG_PATTERN}</pattern>-->
+<!--            <charset>UTF-8</charset>-->
+<!--        </encoder>-->
+<!--    </appender>-->
+
+    <logger name="com.xiaomi.mifi.ins.neo" level="${log_level}"/>
+
+    <root level="${ROOT_LEVEL}">
+         <appender-ref ref="${CONSOLE_APPENDER_NAME}"/>
+<!--        <appender-ref ref="${FILE_APPENDER_NAME}"/>-->
+<!--        <appender-ref ref="${WARN_FILE_APPENDER_NAME}"/>-->
+<!--        <appender-ref ref="${service_name}-localLogScribe"/>-->
+    </root>
+
+
+
+    <!--
+    https://blog.csdn.net/wangb_java/article/details/76295020
+    logger是root的子打印器，可以有多个，输出name配置的包中的日志。
+    hello.dao是我的mybatis映射dao的包名，设置为debug可以打印mybatis的sql语句
+    <logger name="hello.dao" level="DEBUG" />
+    -->
+</Configuration>
+

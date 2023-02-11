@@ -1,0 +1,40 @@
+server:
+  port: 8080
+
+spring:
+  data:
+    mongodb:  # https://blog.csdn.net/qq_50313418/article/details/127092264
+      host: 127.0.0.1 #指定MongoDB服务地址
+      port: 27017 #指定端口，默认就为27017
+      database: homework #指定使用的数据库(集合)
+      authentication-database: admin # 登录认证的逻辑库名
+      username: admin  #用户名
+      password: abc123456  #密码
+#      uri: mongodb://192.168.204.139:27017,192.168.204.139:27018,192.168.204.139:27019/homework?replicaSet=myreplace # 配置副本集
+
+
+mongodb:
+  config:
+    username: admin
+    password: abc123456
+    database: homework
+    address: localhost:27017 #,localhost:27002,localhost:27003
+    replica-set: reolicaName
+    heartbeat-frequency: 10000
+    heartbeat-socket-timeout: 20000
+    max-connection-idel-time: 0
+    socket-keep-alive: false
+    server-selection-timeout: 30000
+    heartbeat-connect-timeout: 20000
+    connect-timeout: 10000
+    max-connections-per-host: 20
+    max-wait-time: 120000
+    local-threshold: 15
+    min-connections-per-host: 20
+    always-use-m-beans: false
+    ssl-invalid-host-name-allowed: false
+    max-connection-life-time: 0
+    socket-timeout: 0
+    ssl-enabled: false
+    min-heartbeat-frequency: 500
+    threads-allowed-to-block-for-connection-multiplier: 5

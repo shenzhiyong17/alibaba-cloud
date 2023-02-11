@@ -1,0 +1,36 @@
+server:
+  port: 8089
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+#       https://docs.spring.io/spring-cloud-gateway/docs/2.2.5.RELEASE/reference/html/
+#      routes:  # 配置 RouteDefinition.class 各属性
+#        - id: order_nacos-route # 路由的唯一标识
+#          uri: lb://order-nacos-service # 需要转发的地址  lb: nacos的本地负载均衡
+#          predicates: # 断言规则 用于路由规则的匹配，支持Path、时间、Cookie、Header、Host、IP、weight等
+#            - Path=/order-service/**
+#            # http://localhost:8088/order-serv/order/add ↓
+#            # http://localhost:9500/order-serv/order/add
+#          filters: # 过滤器 用于修改请求
+#            - StripPrefix=1  # 转发之前删掉第一层路径
+#            # http://localhost:9500/order/add
+##        - id: stock_route
+      discovery:  # 发现所有服务名转发到相应服务
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      globalcors: # 配置允许跨域请求
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "https://docs.spring.io"  # 允许来自某域名的访问
+            allowedMethods:
+              - GET
+    nacos:
+      discovery:
+        username: nacos
+        password: nacos
+        namespace: staging
+      server-addr: localhost:8848

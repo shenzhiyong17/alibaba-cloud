@@ -1,0 +1,30 @@
+server:
+  port: 9700
+
+spring:
+  application:
+    name: user-service
+
+  datasource:
+    username: root
+    password: root
+    url: jdbc:mysql://127.0.0.1:3306/homework?serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  cloud:
+    nacos:
+      discovery:
+        username: nacos
+        password: nacos
+        namespace: staging
+      server-addr: localhost:8848
+
+    sentinel:
+      transport:
+        dashboard: 127.0.0.1:8858 # 配置控制台地址
+
+feign:
+  sentinel:
+    enabled: true  # 开启openfeign 整合sentinel
+
+
