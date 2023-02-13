@@ -21,18 +21,13 @@ spring.shardingsphere.datasource.server-order1.password=123456
 # --------------------------------------分片配置
 #spring.shardingsphere.rules.sharding.tables.t_order.actual-data-nodes=server-order0.order1
 spring.shardingsphere.rules.sharding.tables.t_order.actual-data-nodes=server-order$->{0..1}.order$->{[0,1]}
-spring.shardingsphere.rules.sharding.tables.t_order_item.actual-data-nodes=server-order$->{0..1}.t_order_item$->{[0,1]}
 
 
 # --------------------------------------设置分库策略（分库用INLINE，分表用HASH_MOD）
-# 设置分表键
+# 设置t_order分表键
 spring.shardingsphere.rules.sharding.tables.t_order.database-strategy.standard.sharding-column=user_id
-# 设置分库算法名称
+# 设置t_order分库算法名称
 spring.shardingsphere.rules.sharding.tables.t_order.database-strategy.standard.sharding-algorithm-name=alg_inline_userid
-# 设置t_order_item分表键，与t_order保持一致，避免同一user_id跨库联合查询
-spring.shardingsphere.rules.sharding.tables.t_order_item.database-strategy.standard.sharding-column=user_id
-# 设置t_order_item分库算法名称，与t_order保持一致，避免同一user_id跨库联合查询
-spring.shardingsphere.rules.sharding.tables.t_order_item.database-strategy.standard.sharding-algorithm-name=alg_inline_userid
 # inline 分片算法
 spring.shardingsphere.rules.sharding.sharding-algorithms.alg_inline_userid.type=INLINE
 spring.shardingsphere.rules.sharding.sharding-algorithms.alg_inline_userid.props.algorithm-expression=server-order$->{user_id % 2}
@@ -41,10 +36,7 @@ spring.shardingsphere.rules.sharding.sharding-algorithms.alg_inline_userid.props
 spring.shardingsphere.rules.sharding.tables.t_order.table-strategy.standard.sharding-column=order_no
 # 设置分表算法名称
 spring.shardingsphere.rules.sharding.tables.t_order.table-strategy.standard.sharding-algorithm-name=alg_hash_mod
-# order_item的分表算法跟t_order保持一致，两张表都有order_no键
-spring.shardingsphere.rules.sharding.tables.t_order_item.table-strategy.standard.sharding-column=order_no
-# 设置分表算法名称
-spring.shardingsphere.rules.sharding.tables.t_order_item.table-strategy.standard.sharding-algorithm-name=alg_hash_mod
+
 # hashMod 分片算法
 spring.shardingsphere.rules.sharding.sharding-algorithms.alg_hash_mod.type=HASH_MOD
 spring.shardingsphere.rules.sharding.sharding-algorithms.alg_hash_mod.props.sharding-count=2
@@ -52,7 +44,5 @@ spring.shardingsphere.rules.sharding.sharding-algorithms.alg_hash_mod.props.shar
 # -------------------------------------- 分布式序列id，跟@TableId的type属性冲突，需要配置@TableId(type=IdType.AUTO)
 spring.shardingsphere.rules.sharding.tables.t_order.key-generate-strategy.column=id
 spring.shardingsphere.rules.sharding.tables.t_order.key-generate-strategy.key-generator-name=alg_snowflake
-spring.shardingsphere.rules.sharding.tables.t_order_item.key-generate-strategy.column=id
-spring.shardingsphere.rules.sharding.tables.t_order_item.key-generate-strategy.key-generator-name=alg_snowflake
 # 支持雪花算法和UUID
 spring.shardingsphere.rules.sharding.key-generators.alg_snowflake.type=SNOWFLAKE
