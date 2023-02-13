@@ -1,5 +1,6 @@
 package szy.alibaba.cloud.sharding;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,19 +22,33 @@ public class ShardingTest {
     @Test
     public void testInsert(){
         Random random = new Random();
-        for (int i = 10; i < 20; i++) {
+        for (int i = 0; i < 40; i++) {
             Order order = new Order();
-            order.setAmount(new BigDecimal(10));
-            order.setUserId(15L + i);
-            order.setOrderNo("OrderXX0" + random.nextInt(100));
+            order.setAmount(new BigDecimal(random.nextInt(100)));
+            order.setUserId((long) i);
+            order.setOrderNo("Order" + random.nextInt(100) + "XX");
             System.out.println(orderMapper.insert(order));
         }
     }
 
     @Test
-    public void testHash(){
-        for (int i = 50; i < 60; i++) {
-            System.out.println(( i + "Order00100").hashCode() % 2);
-        }
+    public void testQueryOne(){
+        // by user_id
+        System.out.println(orderMapper.selectOne(new QueryWrapper<Order>().eq("user_id", 10)));
+        // by order_no
+        System.out.println(orderMapper.selectOne(new QueryWrapper<Order>().eq("order_no", "Order52XX")));
+        // by other key
+        System.out.println(orderMapper.selectOne(new QueryWrapper<Order>().eq("amount", new BigDecimal(16))));
     }
+
+    @Test
+    public void testQueryMany(){
+        // by user_id
+        System.out.println(orderMapper.selectList(new QueryWrapper<Order>().between("user_id", 10, 20)));
+        // by order_no
+        orderMapper.selectList(new QueryWrapper<Order>().between("order_no", "Order5", "Order52XX")).forEach(System.out::println);
+        // by other key
+        System.out.println(orderMapper.selectList(new QueryWrapper<Order>().between("amount", 20, 50)));
+    }
+
 }
