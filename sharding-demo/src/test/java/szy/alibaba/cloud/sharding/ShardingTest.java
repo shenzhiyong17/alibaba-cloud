@@ -6,9 +6,11 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import szy.alibaba.cloud.sharding.mapper.DictMapper;
 import szy.alibaba.cloud.sharding.mapper.OrderItemMapper;
 import szy.alibaba.cloud.sharding.mapper.OrderMapper;
 import szy.alibaba.cloud.sharding.mapper.OrderVOMapper;
+import szy.alibaba.cloud.sharding.module.Dict;
 import szy.alibaba.cloud.sharding.module.Order;
 import szy.alibaba.cloud.sharding.module.OrderItem;
 
@@ -28,6 +30,9 @@ public class ShardingTest {
 
     @Autowired
     OrderVOMapper orderVOMapper;
+
+    @Autowired
+    DictMapper dictMapper;
 
     @Test
     public void testInsert() {
@@ -105,5 +110,15 @@ public class ShardingTest {
     @Test
     public void testGetOrderVOList(){
         orderVOMapper.listVOList().forEach(System.out::println);
+    }
+
+    /**
+     * 广播表插入
+     */
+    @Test
+    public void testBroadcastInsert(){
+        Dict dict = new Dict();
+        dict.setConfig("config1");
+        dictMapper.insert(dict);
     }
 }
