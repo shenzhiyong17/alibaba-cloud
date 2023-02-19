@@ -8,11 +8,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import szy.alibaba.cloud.sharding.mapper.OrderItemMapper;
 import szy.alibaba.cloud.sharding.mapper.OrderMapper;
+import szy.alibaba.cloud.sharding.mapper.OrderVOMapper;
 import szy.alibaba.cloud.sharding.module.Order;
 import szy.alibaba.cloud.sharding.module.OrderItem;
 
 import java.math.BigDecimal;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = ShardingApplication.class)
@@ -23,6 +25,9 @@ public class ShardingTest {
 
     @Autowired
     OrderItemMapper orderItemMapper;
+
+    @Autowired
+    OrderVOMapper orderVOMapper;
 
     @Test
     public void testInsert() {
@@ -60,35 +65,45 @@ public class ShardingTest {
      * 测试关联表插入
      */
     @Test
-    public void testInsertOrderAndItem() {
+    public void testInsertOrderAndItem() throws InterruptedException{
         Random random = new Random();
-        for (int i = 0; i < 5; i++) {
+        for (int i = 15; i < 20; i++) {
             Order order = new Order();
             order.setUserId(1L);
             order.setOrderNo("UnionOrder" + i);
             orderMapper.insert(order);
             for (int j = 0; j < 3; j++) {
+                Thread.sleep(random.nextInt(5));
                 OrderItem orderItem = new OrderItem();
                 orderItem.setUserId(1L);
                 orderItem.setOrderNo("UnionOrder" + i);
-                orderItem.setCount(1);
-                orderItem.setPrice(new BigDecimal(10));
+                orderItem.setCount(random.nextInt(5));
+                orderItem.setPrice(new BigDecimal(random.nextInt(10)));
                 orderItemMapper.insert(orderItem);
             }
         }
-        for (int i = 5; i < 10; i++) {
+        for (int i = 20; i < 25; i++) {
             Order order = new Order();
             order.setUserId(2L);
             order.setOrderNo("UnionOrder" + i);
             orderMapper.insert(order);
             for (int j = 0; j < 3; j++) {
+                Thread.sleep(random.nextInt(5));
                 OrderItem orderItem = new OrderItem();
                 orderItem.setUserId(2L);
                 orderItem.setOrderNo("UnionOrder" + i);
-                orderItem.setCount(2);
-                orderItem.setPrice(new BigDecimal(5));
+                orderItem.setCount(random.nextInt(4));
+                orderItem.setPrice(new BigDecimal(random.nextInt(10)));
                 orderItemMapper.insert(orderItem);
             }
         }
+    }
+
+    /**
+     * 联合查询 order表和order_item表，组装到 VO
+     */
+    @Test
+    public void testGetOrderVOList(){
+        orderVOMapper.listVOList().forEach(System.out::println);
     }
 }
